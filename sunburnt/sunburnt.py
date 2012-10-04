@@ -100,6 +100,10 @@ class SolrConnection(object):
             return self.update_url
 
     def select(self, params):
+        # Make sur the result are in xml and have an header
+        params.append(('wt', 'xml'))
+        params.append(('omitHeader', 'false'))        
+        
         qs = urllib.urlencode(params)
         url = "%s?%s" % (self.select_url, qs)
         if len(url) > self.max_length_get_url:
